@@ -1,0 +1,13 @@
+test_fraction: 0.3
+random_state: 2021
+target_column: "y"
+run_name: "default"
+feature_selection: "rfe"
+model_name: "bank"
+use_feature:selection: "yes"
+baseline_model_params:
+  n_estimators: 100
+  max_depth: 6
+  max_features: 20
+  random_state: 2021
+
