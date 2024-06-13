@@ -3,12 +3,12 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "first_example"
+name = "bank_full_project"
 readme = "README.md"
 dynamic = ["dependencies", "version"]
 
 [project.scripts]
-first-example = "first_example.__main__:main"
+bank-full-project = "bank_full_project.__main__:main"
 
 [project.entry-points."kedro.hooks"]
 
@@ -27,24 +27,24 @@ docs = [
 
 [tool.setuptools.dynamic]
 dependencies = {file = "requirements.txt"}
-version = {attr = "first_example.__version__"}
+version = {attr = "bank_full_project.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
 namespaces = false
 
 [tool.kedro]
-package_name = "first_example"
-project_name = "first_example"
+package_name = "bank_full_project"
+project_name = "bank_full_project"
 kedro_init_version = "0.19.5"
 tools = ['Linting', 'Testing', 'Custom Logging', 'Documentation', 'Data Structure']
-example_pipeline = "True"
+example_pipeline = "False"
 source_dir = "src"
 
 [tool.pytest.ini_options]
 addopts = """
 --cov-report term-missing \
---cov src/first_example -ra"""
+--cov src/bank_full_project -ra"""
 
 [tool.coverage.report]
 fail_under = 0

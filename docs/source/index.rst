@@ -1,8 +1,8 @@
-.. first_example documentation master file, created by sphinx-quickstart.
+.. bank_full_project documentation master file, created by sphinx-quickstart.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to project first_example's API docs!
+Welcome to project bank_full_project's API docs!
 =============================================
 
 .. toctree::

@@ -1,4 +1,4 @@
-# first_example
+# bank_full_project
 
 ## Overview
 
@@ -11,7 +11,7 @@ Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
 In order to get the best out of the template:
 
 * Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://docs.kedro.org/en/stable/faq/faq.html#what-is-data-engineering-convention)
+* Make sure your results can be reproduced by following a data engineering convention
 * Don't commit data to your repository
 * Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
 
@@ -35,13 +35,14 @@ kedro run
 
 ## How to test your Kedro project
 
-Have a look at the files `src/tests/test_run.py` and `src/tests/pipelines/data_science/test_pipeline.py` for instructions on how to write your tests. Run the tests as follows:
+Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
 
 ```
 pytest
 ```
 
-To configure the coverage threshold, look at the `.coveragerc` file.
+You can configure the coverage threshold in your project's `pyproject.toml` file under the `[tool.coverage.report]` section.
+
 
 ## Project dependencies
 
@@ -51,7 +52,7 @@ To see and update the dependency requirements for your project use `requirements
 
 ## How to work with Kedro and notebooks
 
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `catalog`, `context`, `pipelines` and `session`.
+> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, 'session', `catalog`, and `pipelines`.
 >
 > Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r requirements.txt` you will not need to take any extra steps before you use them.
 

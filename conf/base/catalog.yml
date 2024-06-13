@@ -2,108 +2,58 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
-#
-# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
-#
-# An example data set definition can look as follows:
-#
-#bikes:
-#  type: pandas.CSVDataset
-#  filepath: "data/01_raw/bikes.csv"
-#
-#weather:
-#  type: spark.SparkDataset
-#  filepath: s3a://your_bucket/data/01_raw/weather*
-#  file_format: csv
-#  credentials: dev_s3
-#  load_args:
-#    header: True
-#    inferSchema: True
-#  save_args:
-#    sep: '|'
-#    header: True
-#
-#scooters:
-#  type: pandas.SQLTableDataset
-#  credentials: scooters_credentials
-#  table_name: scooters
-#  load_args:
-#    index_col: ['name']
-#    columns: ['name', 'gear']
-#  save_args:
-#    if_exists: 'replace'
-#    # if_exists: 'fail'
-#    # if_exists: 'append'
-#
-# The Data Catalog supports being able to reference the same file using two different Dataset implementations
-# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
-# https://docs.kedro.org/en/stable/data/data_catalog.html
 
-# companies:
-#   type: pandas.CSVDataset
-#   filepath: data/01_raw/companies.csv
-
-# reviews:
-#   type: pandas.CSVDataset
-#   filepath: data/01_raw/reviews.csv
-
-# shuttles:
-#   type: pandas.ExcelDataset
-#   filepath: data/01_raw/shuttles.xlsx
-#   load_args:
-#     engine: openpyxl
-
-# preprocessed_companies:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/preprocessed_companies.pq
-
-# preprocessed_shuttles:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/preprocessed_shuttles.pq
-
-# model_input_table:
-#   type: pandas.ParquetDataset
-#   filepath: data/03_primary/model_input_table.pq
-
-# regressor:
-#   type: pickle.PickleDataset
-#   filepath: data/06_models/regressor.pickle
-#   versioned: true
 
 
 bank_raw_data:
   type: pandas.CSVDataset
   filepath: data/01_raw/bank_data.csv
-  load_args:
-    sep: ';'
+  # load_args:
+  #   sep: ';'
 
 
-sample:
+bank_additional_data:
   type: pandas.CSVDataset
-  filepath: data/01_raw/sample.csv
+  filepath: data/01_raw/bank_data_additional.csv
 
 
-raw_describe:
+ingested_data:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/ingested_data.csv
+
+
+ref_data:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/ref_data.csv
+
+ana_data:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/ana_data.csv
+
+
+reporting_data_train:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
   dataset:
     type: json.JSONDataset
-    filepath: data/08_reporting/describe_data_raw.json
+    filepath: data/08_reporting/reporting_data_train.json
 
-cleaned_describe:
+reporting_tests:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/data_tests.csv
+
+preprocessed_training_data:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/preprocessed_train_data.csv
+
+preprocessed_batch_data:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/preprocessed_batch_data.csv
+
+encoder_transform:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
   dataset:
-    type: json.JSONDataset
-    filepath: data/08_reporting/describe_data_cleaned.json
-
-
-bank_cleaned_data:
-  type: pandas.CSVDataset
-  filepath: data/02_intermediate/bank_full_cleaned.csv
-
-
-bank_data_engineered:
-  type: pandas.CSVDataset
-  filepath: data/04_feature/bank_full_engineered.csv
+    type: pickle.PickleDataset
+    filepath: data/04_feature/encoder.pkl
 
 X_train_data:
   type: pandas.CSVDataset
@@ -120,8 +70,20 @@ X_test_data:
 
 y_test_data:
   type: pandas.CSVDataset
-  filepath: data/05_model_input/y_test.csv
+  filepath: data/05_model_input/y_test.csv 
 
+production_columns:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: pickle.PickleDataset
+    filepath: data/06_models/production_cols.pkl
+
+
+best_columns:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: pickle.PickleDataset
+    filepath: data/06_models/best_cols.pkl
 
 production_model:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
@@ -135,19 +97,13 @@ production_model_metrics:
     type: json.JSONDataset
     filepath: data/08_reporting/production_model_metrics.json
 
-
-
-
-X_to_predict:
+drift_result:
   type: pandas.CSVDataset
-  filepath: data/03_primary/X_to_predict.csv
+  filepath: data/08_reporting/drift_result.csv
 
-df_with_predict:
-  type: pandas.CSVDataset
-  filepath: data/07_model_output/df_with_predict.csv
 
-predict_describe:
+output_plot:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
   dataset:
-    type: json.JSONDataset
-    filepath: data/08_reporting/predict_describe.json
+    type: matplotlib.MatplotlibWriter
+    filepath: data/08_reporting/shap_plot.png
